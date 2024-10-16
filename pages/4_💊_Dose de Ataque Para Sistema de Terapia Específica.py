@@ -1,5 +1,9 @@
 import streamlit as st
 import math
+from PIL import Image
+
+image = Image.open('images/4bio.png')
+st.sidebar.image(image, width=120)
 
 # Função para limpar os inputs
 def clear_inputs():
@@ -33,8 +37,26 @@ if 'dose_manutencao' not in st.session_state:
 if 'intervalo_manutencao' not in st.session_state:
     st.session_state['intervalo_manutencao'] = 0
 
+
+# Aplicando estilo ao botão "Limpar Inputs"
+st.markdown("""
+    <style>
+    div.stButton > button {
+        background-color: white;
+        color: black;
+        border: 1px solid #d9d9d9;
+    }
+    div.stButton > button:hover {
+        background-color: white;
+        border: 1px solid #BBD760;
+        color: #007B45;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 # Título da aplicação
-st.title("Cálculo de Dose de Ataque para Sistema de Terapia Específica")
+st.markdown("<h1 style='color:#007B45;'>Cálculo de Dose de Ataque para Sistema de Terapia Específica</h1>", unsafe_allow_html=True)
 
 # Botão para limpar os inputs antes da criação dos widgets
 if st.button("Limpar Inputs"):
@@ -49,13 +71,13 @@ dose_ataque_3 = st.number_input("Dose Ataque 3 (em mg):", min_value=0, step=1, k
 dose_ataque_4 = st.number_input("Dose Ataque 4 (em mg):", min_value=0, step=1, key="dose_ataque_4")
 dose_ataque_5 = st.number_input("Dose Ataque 5 (em mg):", min_value=0, step=1, key="dose_ataque_5")
 
-st.markdown("##### Dose de Manutenção")
+st.markdown("<h5 style='color:#007B45;'>Dose de Manutenção</h5>", unsafe_allow_html=True)
 dose_manutencao = st.number_input("Dose Manutenção (em mg):", min_value=0, step=1, key="dose_manutencao")
 intervalo_manutencao = st.number_input("Intervalo Manutenção (em dias):", min_value=0, step=1, key="intervalo_manutencao")
 
 # Divisor e título "Resultado"
-st.markdown("---")  # Adiciona uma linha divisória
-st.subheader("Resultado")
+st.markdown("---") 
+st.markdown("<h2 style='color:#007B45;'>Resultado</h2>", unsafe_allow_html=True)
 
 # Cálculo das doses totais
 ttl_medicamento_necessario = dose_ataque_1 + dose_ataque_2 + dose_ataque_3 + dose_ataque_4 + dose_ataque_5
@@ -73,11 +95,11 @@ if dose_manutencao > 0 and intervalo_manutencao > 0 and medicamento_mg > 0 and q
 else:
     caixas_por_envio = "???"
 
-# Título "INFORMAÇÕES PARA DOSE DE ATAQUE"
-st.markdown("##### Informações Para Dose De Ataque")
+# Título "Informações Para Dose De Ataque"
+st.markdown("<h5 style='color:#007B45;'>Informações Para Dose De Ataque</h5>", unsafe_allow_html=True)
 st.write(f"**TTL Medicamento Necessário (mg):** {ttl_medicamento_necessario}")
 st.write(f"**Nro Caixas Necessárias:** {nro_caixas_necessarias}")
 
-# Título "INFORMAÇÕES PARA ENVIO MENSAL (30 DIAS)"
-st.markdown("##### Informações Para Envio Mensal (30 Dias)")
+# Título "Informações Para Envio Mensal (30 Dias)"
+st.markdown("<h5 style='color:#007B45;'>Informações Para Envio Mensal (30 Dias)</h5>", unsafe_allow_html=True)
 st.write(f"**Caixas Necessárias por Envio:** {caixas_por_envio}")

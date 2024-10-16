@@ -1,5 +1,9 @@
 import streamlit as st
 import math
+from PIL import Image
+
+image = Image.open('images/4bio.png')
+st.sidebar.image(image, width=120)
 
 # Função para limpar os inputs
 def clear_inputs():
@@ -18,8 +22,26 @@ if 'concentracao' not in st.session_state:
 if 'tempo_autorizacao' not in st.session_state:
     st.session_state['tempo_autorizacao'] = 0
 
+
+# Aplicando estilo ao botão "Limpar Inputs"
+st.markdown("""
+    <style>
+    div.stButton > button {
+        background-color: white;
+        color: black;
+        border: 1px solid #d9d9d9;
+    }
+    div.stButton > button:hover {
+        background-color: white;
+        border: 1px solid #BBD760;
+        color: #007B45;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 # Título da aplicação
-st.title("Calculadora para Sistema de Terapia Específica GH")
+st.markdown("<h1 style='color:#007B45;'>Calculadora para Sistema de Terapia Específica GH</h1>", unsafe_allow_html=True)
 
 # Botão para limpar os inputs antes da criação dos widgets
 if st.button("Limpar Inputs"):
@@ -59,26 +81,22 @@ dias_por_caixa = calcular_dias_por_caixa(qtd_caixas, concentracao, dosagem_por_d
 total_envios = calcular_total_envios(tempo_autorizacao, dias_por_caixa)
 
 # Exibindo os resultados
-st.subheader("Resultado")
+st.markdown("<h2 style='color:#007B45;'>Resultado</h2>", unsafe_allow_html=True)
 st.write(f"**Quantidade de caixas por envio:** {qtd_caixas}")
 st.write(f"**Cada caixa atenderá por (dias):** {dias_por_caixa}")
 st.write(f"**Quantidade total de envios:** {total_envios}")
 
 st.markdown("---")
 
-# Avisos conforme a quantidade de caixas (em vermelho)
+# Avisos conforme a quantidade de caixas (em verde escuro)
 if qtd_caixas != "???" and qtd_caixas > 5:
-    st.markdown("<p style='color:red;'><strong>ATENÇÃO! Quantidade superior a 5 caixas</strong></p>", unsafe_allow_html=True)
-    st.markdown("<p style='color:red;'>De acordo com legislação RDC 344/98 que aprova o regulamento técnico sobre substâncias e medicamentos sujeitos a controle especial:</p>", unsafe_allow_html=True)
-    st.markdown("<p style='color:red;'>Por gentileza, solicitar o envio de duas prescrições ou prescrição e justificativa.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#007B45;'><strong>ATENÇÃO! Quantidade superior a 5 caixas</strong></p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#007B45;'>De acordo com legislação RDC 344/98 que aprova o regulamento técnico sobre substâncias e medicamentos sujeitos a controle especial:</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#007B45;'>Por gentileza, solicitar o envio de duas prescrições ou prescrição e justificativa.</p>", unsafe_allow_html=True)
     st.markdown("---")
 
-
-
-
-
 # Tabela de envios (Esquema de envios)
-st.subheader("Esquema de Envios")
+st.markdown("<h2 style='color:#007B45;'>Esquema de Envios</h2>", unsafe_allow_html=True)
 if isinstance(total_envios, int) and total_envios > 0:
     tabela_envios = []
     for i in range(1, min(total_envios + 1, 101)):  # Limitando a tabela a 100 linhas
